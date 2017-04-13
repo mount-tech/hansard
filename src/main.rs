@@ -10,6 +10,7 @@ use std::fs::File;
 use std::io::prelude::*;
 
 const BOUND_VOL_URL: &'static str = "http://api.data.parliament.uk/resources/files/feed?dataset=14";
+const BASE: &'static str = "./data/";
 
 fn get_save_zip(url: String) -> thread::JoinHandle<()> {
     thread::spawn(move || {
@@ -31,7 +32,7 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
 
         println!("Saving:{}", file_name);
 
-        let mut file = File::create(file_name).unwrap();
+        let mut file = File::create(format!("{}/{}", BASE, file_name)).unwrap();
         file.write_all(zip_buf.as_slice()).unwrap(); 
     })
 }
@@ -45,6 +46,10 @@ fn main() {
         .read_to_string(&mut atom_str).unwrap();
 
     let feed = atom_str.parse::<Feed>().unwrap();
+
+    if let Err(e) = std::fs::create_dir(BASE) {
+        println!("{}", e);
+    }
 
     let vol_urls = feed.entries.iter()
         .map(|e| e.links.first().unwrap().href.clone())

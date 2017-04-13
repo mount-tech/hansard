@@ -2,6 +2,12 @@
 name = "hansard"
 version = "0.1.0"
 authors = ["shockham <samuel.hockham@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/mount-research/hansard"
+homepage = "https://github.com/mount-research/hansard"
+documentation = "https://docs.rs/hansard"
+description = "Gets the last 20 Hansard Bound Volumes for the UK Parliament"
 
 [dependencies]
 atom_syndication = "0.3"
