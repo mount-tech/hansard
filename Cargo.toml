@@ -1,0 +1,8 @@
+[package]
+name = "hansard"
+version = "0.1.0"
+authors = ["shockham <samuel.hockham@gmail.com>"]
+
+[dependencies]
+atom_syndication = "0.3"
+hyper = "0.10"
