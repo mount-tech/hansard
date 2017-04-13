@@ -1,3 +1,11 @@
+/*!
+    Binary to get the last 20 Hansard Bound Volumes of the UK Parliament
+
+    Usage: `hansard all` Gets the last 20 bound volumes and saves to ./data/ directory
+*/
+
+#![deny(missing_docs)]
+
 extern crate atom_syndication;
 extern crate hyper;
 

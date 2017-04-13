@@ -34,6 +34,7 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
     })
 }
 
+/// Retrieves the bound volumes
 pub fn retrieve() {
     let mut atom_str = String::new();
 
