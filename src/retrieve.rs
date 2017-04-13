@@ -5,16 +5,25 @@ use std::thread;
 
 use std::fs::{ File, create_dir };
 use std::io::prelude::*;
+use std::path::Path;
 
 const BOUND_VOL_URL: &'static str = "http://api.data.parliament.uk/resources/files/feed?dataset=14";
 const BASE: &'static str = "./data/";
 
 fn get_save_zip(url: String) -> thread::JoinHandle<()> {
     thread::spawn(move || {
-        let mut zip_buf = Vec::new();
+        let split_path = url.split("/").collect::<Vec<&str>>();
+        let file_name = split_path.last().unwrap();
+        let full_path = format!("{}/{}", BASE, file_name);
+
+        if Path::new(full_path.as_str()).exists() {
+            println!("Skipping: {}", full_path);
+            return;
+        }
 
         println!("Getting: {}", url);
 
+        let mut zip_buf = Vec::new();
         if let Err(e) =  Client::new()
             .get(url.as_str())
             .send().unwrap()
@@ -24,12 +33,9 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
             return;
         }
 
-        let split_path = url.split("/").collect::<Vec<&str>>();
-        let file_name = split_path.last().unwrap();
+        println!("Saving: {}", file_name);
 
-        println!("Saving:{}", file_name);
-
-        let mut file = File::create(format!("{}/{}", BASE, file_name)).unwrap();
+        let mut file = File::create(full_path).unwrap();
         file.write_all(zip_buf.as_slice()).unwrap(); 
     })
 }
