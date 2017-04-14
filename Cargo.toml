@@ -12,3 +12,4 @@ description = "Gets the last 20 Hansard Bound Volumes for the UK Parliament"
 [dependencies]
 atom_syndication = "0.3"
 hyper = "0.10"
+zip = "0.2"

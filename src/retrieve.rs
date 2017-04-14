@@ -6,6 +6,7 @@ use std::thread;
 use std::fs::{ File, create_dir };
 use std::io::prelude::*;
 use std::path::Path;
+use zip::ZipArchive;
 
 const BOUND_VOL_URL: &'static str = "http://api.data.parliament.uk/resources/files/feed?dataset=14";
 const BASE: &'static str = "./data/";
@@ -18,25 +19,47 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
 
         if Path::new(full_path.as_str()).exists() {
             println!("Skipping: {}", full_path);
-            return;
+        } else {
+            println!("Getting: {}", url);
+
+            let mut zip_buf = Vec::new();
+            if let Err(e) =  Client::new()
+                .get(url.as_str())
+                .send().unwrap()
+                .read_to_end(&mut zip_buf) {
+
+                println!("Error: {:?}", e);
+                return;
+            }
+
+            println!("Saving: {}", file_name);
+
+            let mut file = File::create(full_path.clone()).unwrap();
+            file.write_all(zip_buf.as_slice()).unwrap();
         }
 
-        println!("Getting: {}", url);
+        let zip_file = File::open(full_path).unwrap();
+        let mut zip = ZipArchive::new(zip_file).unwrap();
 
-        let mut zip_buf = Vec::new();
-        if let Err(e) =  Client::new()
-            .get(url.as_str())
-            .send().unwrap()
-            .read_to_end(&mut zip_buf) {
-            
-            println!("Error: {:?}", e);
-            return;
+        for i in 0..zip.len() {
+            let mut file = zip.by_index(i).unwrap();
+            let og_file_name = format!("{}", file.name());
+            let inner_split_path = og_file_name.split("/").collect::<Vec<&str>>();
+            let inner_file_name = inner_split_path.last().unwrap();
+            let inner_file_path = format!("{}/{}", BASE, inner_file_name);
+
+            println!("Extracting: {}", file.name());
+
+            let mut zip_buf = Vec::new();
+            if let Err(e) = file.read_to_end(&mut zip_buf) {
+                println!("Error: {}", e);
+            }
+
+            println!("Saving: {}", inner_file_path);
+
+            let mut file = File::create(inner_file_path).unwrap();
+            file.write_all(zip_buf.as_slice()).unwrap();
         }
-
-        println!("Saving: {}", file_name);
-
-        let mut file = File::create(full_path).unwrap();
-        file.write_all(zip_buf.as_slice()).unwrap(); 
     })
 }
 
@@ -52,7 +75,7 @@ pub fn retrieve() {
     let feed = atom_str.parse::<Feed>().unwrap();
 
     if let Err(e) = create_dir(BASE) {
-        println!("{}", e);
+        println!("Create dir: {}", e);
     }
 
     let vol_urls = feed.entries.iter()

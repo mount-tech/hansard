@@ -20,6 +20,7 @@
 
 extern crate atom_syndication;
 extern crate hyper;
+extern crate zip;
 
 /// Module for retrieving the Hansard bound volumes
 pub mod retrieve;

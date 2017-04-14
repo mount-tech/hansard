@@ -8,6 +8,7 @@
 
 extern crate atom_syndication;
 extern crate hyper;
+extern crate zip;
 
 mod retrieve;
 
