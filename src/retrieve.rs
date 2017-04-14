@@ -15,7 +15,7 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
     thread::spawn(move || {
         let split_path = url.split("/").collect::<Vec<&str>>();
         let file_name = split_path.last().unwrap();
-        let full_path = format!("{}/{}", BASE, file_name);
+        let full_path = format!("{}/vol_zip/{}", BASE, file_name);
 
         if Path::new(full_path.as_str()).exists() {
             println!("Skipping: {}", full_path);
@@ -51,7 +51,8 @@ fn process_zip<T: Read + Seek>(zip_file: T) {
         let og_file_name = format!("{}", file.name());
         let inner_split_path = og_file_name.split("/").collect::<Vec<&str>>();
         let inner_file_name = inner_split_path.last().unwrap();
-        let inner_file_path = format!("{}/{}", BASE, inner_file_name);
+        let folder = if inner_file_name.ends_with("xml") { "xml" } else { "inner_zip" };
+        let inner_file_path = format!("{}/{}/{}", BASE, folder, inner_file_name);
 
         if !inner_file_name.contains("html") &&
             !inner_file_name.ends_with("pdf") &&
@@ -90,6 +91,15 @@ pub fn retrieve() {
     let feed = atom_str.parse::<Feed>().unwrap();
 
     if let Err(e) = create_dir(BASE) {
+        println!("Create dir: {}", e);
+    }
+    if let Err(e) = create_dir(format!("{}/vol_zip", BASE)) {
+        println!("Create dir: {}", e);
+    }
+    if let Err(e) = create_dir(format!("{}/xml", BASE)) {
+        println!("Create dir: {}", e);
+    }
+    if let Err(e) = create_dir(format!("{}/inner_zip", BASE)) {
         println!("Create dir: {}", e);
     }
 
