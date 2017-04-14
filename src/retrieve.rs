@@ -9,7 +9,7 @@ use std::path::Path;
 use zip::ZipArchive;
 
 const BOUND_VOL_URL: &'static str = "http://api.data.parliament.uk/resources/files/feed?dataset=14";
-const BASE: &'static str = "./data/";
+const BASE: &'static str = "./data";
 
 fn get_save_zip(url: String) -> thread::JoinHandle<()> {
     thread::spawn(move || {
@@ -39,14 +39,23 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
         }
 
         let zip_file = File::open(full_path).unwrap();
-        let mut zip = ZipArchive::new(zip_file).unwrap();
+        process_zip(zip_file);
+    })
+}
 
-        for i in 0..zip.len() {
-            let mut file = zip.by_index(i).unwrap();
-            let og_file_name = format!("{}", file.name());
-            let inner_split_path = og_file_name.split("/").collect::<Vec<&str>>();
-            let inner_file_name = inner_split_path.last().unwrap();
-            let inner_file_path = format!("{}/{}", BASE, inner_file_name);
+fn process_zip<T: Read + Seek>(zip_file: T) {
+    let mut zip = ZipArchive::new(zip_file).unwrap();
+
+    for i in 0..zip.len() {
+        let mut file = zip.by_index(i).unwrap();
+        let og_file_name = format!("{}", file.name());
+        let inner_split_path = og_file_name.split("/").collect::<Vec<&str>>();
+        let inner_file_name = inner_split_path.last().unwrap();
+        let inner_file_path = format!("{}/{}", BASE, inner_file_name);
+
+        if !inner_file_name.contains("html") &&
+            !inner_file_name.ends_with("pdf") &&
+            !inner_file_name.ends_with("htm") {
 
             println!("Extracting: {}", file.name());
 
@@ -57,10 +66,16 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
 
             println!("Saving: {}", inner_file_path);
 
-            let mut file = File::create(inner_file_path).unwrap();
-            file.write_all(zip_buf.as_slice()).unwrap();
+            let mut inner_file = File::create(inner_file_path.clone()).unwrap();
+            inner_file.write_all(zip_buf.as_slice()).unwrap();
         }
-    })
+
+        if inner_file_name.ends_with("zip") &&
+            !inner_file_name.contains("html") {
+            let inner_zip = File::open(inner_file_path).unwrap();
+            process_zip(inner_zip);
+        }
+    }
 }
 
 /// Retrieves the bound volumes
