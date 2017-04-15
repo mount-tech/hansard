@@ -10,12 +10,15 @@ use zip::ZipArchive;
 
 const BOUND_VOL_URL: &'static str = "http://api.data.parliament.uk/resources/files/feed?dataset=14";
 const BASE: &'static str = "./data";
+const VOL_ZIP_DIR: &'static str = "vol_zip";
+const XML_DIR: &'static str = "xml";
+const INNER_ZIP_DIR: &'static str = "inner_zip";
 
 fn get_save_zip(url: String) -> thread::JoinHandle<()> {
     thread::spawn(move || {
         let split_path = url.split("/").collect::<Vec<&str>>();
         let file_name = split_path.last().unwrap();
-        let full_path = format!("{}/vol_zip/{}", BASE, file_name);
+        let full_path = format!("{}/{}/{}", BASE, VOL_ZIP_DIR, file_name);
 
         if Path::new(full_path.as_str()).exists() {
             println!("Skipping: {}", full_path);
@@ -51,7 +54,7 @@ fn process_zip<T: Read + Seek>(zip_file: T) {
         let og_file_name = format!("{}", file.name());
         let inner_split_path = og_file_name.split("/").collect::<Vec<&str>>();
         let inner_file_name = inner_split_path.last().unwrap();
-        let folder = if inner_file_name.ends_with("xml") { "xml" } else { "inner_zip" };
+        let folder = if inner_file_name.ends_with("xml") { XML_DIR } else { INNER_ZIP_DIR };
         let inner_file_path = format!("{}/{}/{}", BASE, folder, inner_file_name);
 
         if !inner_file_name.contains("html") &&
@@ -93,13 +96,13 @@ pub fn retrieve() {
     if let Err(e) = create_dir(BASE) {
         println!("Create dir: {}", e);
     }
-    if let Err(e) = create_dir(format!("{}/vol_zip", BASE)) {
+    if let Err(e) = create_dir(VOL_ZIP_DIR) {
         println!("Create dir: {}", e);
     }
-    if let Err(e) = create_dir(format!("{}/xml", BASE)) {
+    if let Err(e) = create_dir(XML_DIR) {
         println!("Create dir: {}", e);
     }
-    if let Err(e) = create_dir(format!("{}/inner_zip", BASE)) {
+    if let Err(e) = create_dir(INNER_ZIP_DIR) {
         println!("Create dir: {}", e);
     }
 
@@ -112,6 +115,8 @@ pub fn retrieve() {
         .collect::<Vec<thread::JoinHandle<()>>>();
 
     for h in handles {
-        h.join().unwrap();
+        if let Err(e) = h.join() {
+            println!("Error: {:?}", e);
+        }
     }
 }
