@@ -19,6 +19,7 @@ use std::env;
 fn usage() {
     println!("usage: hansard [-h | --help] <command>");
     println!("  all Grabs the last 20 Hansard bound volumes");
+    println!("  xml Prints the hansard bound volume xml");
     println!("  help    Displays this message");
 }
 
@@ -27,6 +28,12 @@ fn main() {
 
     match arg.as_str() {
         "all" => retrieve::retrieve(),
+        "xml" => {
+            let vol_xml  = retrieve::xml();
+            for v in vol_xml {
+                println!("{}", v);
+            }
+        },
         "help" | "-h" | "--help" | _ => usage(),
     }
 }

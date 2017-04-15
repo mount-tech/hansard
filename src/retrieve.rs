@@ -3,6 +3,7 @@ use hyper::Client;
 use std::io::Read;
 use std::thread;
 
+use std::fs;
 use std::fs::{ File, create_dir };
 use std::io::prelude::*;
 use std::path::Path;
@@ -83,6 +84,19 @@ fn process_zip<T: Read + Seek>(zip_file: T) {
             process_zip(inner_zip);
         }
     }
+}
+
+/// Returns a vec of the Bound volumes xml
+pub fn xml() -> Vec<String> {
+    retrieve();
+
+    fs::read_dir(format!("{}/{}", BASE, XML_DIR))
+        .unwrap()
+        .map(|ent| {
+            let mut xml_buf = String::new();
+            File::open(ent.unwrap().path()).unwrap().read_to_string(&mut xml_buf).unwrap_or(0usize);
+            xml_buf
+        }).collect::<Vec<String>>()
 }
 
 /// Retrieves the bound volumes
