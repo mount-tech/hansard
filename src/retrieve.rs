@@ -21,9 +21,9 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
         let full_path = format!("{}/{}/{}", BASE, VOL_ZIP_DIR, file_name);
 
         if Path::new(full_path.as_str()).exists() {
-            println!("Skipping: {}", full_path);
+            info!("Skipping: {}", full_path);
         } else {
-            println!("Getting: {}", url);
+            info!("Getting: {}", url);
 
             let mut zip_buf = Vec::new();
             if let Err(e) =  Client::new()
@@ -31,11 +31,11 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
                 .send().unwrap()
                 .read_to_end(&mut zip_buf) {
 
-                println!("Error: {:?}", e);
+                info!("Error: {:?}", e);
                 return;
             }
 
-            println!("Saving: {}", file_name);
+            info!("Saving: {}", file_name);
 
             let mut file = File::create(full_path.clone()).unwrap();
             file.write_all(zip_buf.as_slice()).unwrap();
@@ -62,19 +62,19 @@ fn process_zip<T: Read + Seek>(zip_file: T) {
             !inner_file_name.ends_with("htm") &&
             !Path::new(inner_file_path.as_str()).exists() {
 
-            println!("Extracting: {}", file.name());
+            info!("Extracting: {}", file.name());
 
             let mut zip_buf = Vec::new();
             if let Err(e) = file.read_to_end(&mut zip_buf) {
-                println!("Error: {}", e);
+                info!("Error: {}", e);
             }
 
-            println!("Saving: {}", inner_file_path);
+            info!("Saving: {}", inner_file_path);
 
             let mut inner_file = File::create(inner_file_path.clone()).unwrap();
             inner_file.write_all(zip_buf.as_slice()).unwrap();
         } else {
-            println!("Skipping: {}", inner_file_name);
+            info!("Skipping: {}", inner_file_name);
         }
 
         if inner_file_name.ends_with("zip") &&
@@ -97,16 +97,16 @@ pub fn retrieve() {
     let feed = atom_str.parse::<Feed>().unwrap();
 
     if let Err(e) = create_dir(BASE) {
-        println!("Create dir: {}", e);
+        info!("Create dir: {}", e);
     }
     if let Err(e) = create_dir(format!("{}/{}", BASE, VOL_ZIP_DIR)) {
-        println!("Create dir: {}", e);
+        info!("Create dir: {}", e);
     }
     if let Err(e) = create_dir(format!("{}/{}", BASE, XML_DIR)) {
-        println!("Create dir: {}", e);
+        info!("Create dir: {}", e);
     }
     if let Err(e) = create_dir(format!("{}/{}", BASE, INNER_ZIP_DIR)) {
-        println!("Create dir: {}", e);
+        info!("Create dir: {}", e);
     }
 
     let vol_urls = feed.entries.iter()
@@ -119,7 +119,7 @@ pub fn retrieve() {
 
     for h in handles {
         if let Err(e) = h.join() {
-            println!("Error: {:?}", e);
+            info!("Error: {:?}", e);
         }
     }
 }

@@ -21,6 +21,8 @@
 extern crate atom_syndication;
 extern crate hyper;
 extern crate zip;
+#[macro_use]
+extern crate log;
 
 /// Module for retrieving the Hansard bound volumes
 pub mod retrieve;

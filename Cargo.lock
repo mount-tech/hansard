@@ -4,6 +4,7 @@ version = "0.1.2"
 dependencies = [
  "atom_syndication 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "hyper 0.10.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.3.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "zip 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 

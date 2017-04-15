@@ -9,6 +9,8 @@
 extern crate atom_syndication;
 extern crate hyper;
 extern crate zip;
+#[macro_use]
+extern crate log;
 
 mod retrieve;
 
