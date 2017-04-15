@@ -59,7 +59,8 @@ fn process_zip<T: Read + Seek>(zip_file: T) {
 
         if !inner_file_name.contains("html") &&
             !inner_file_name.ends_with("pdf") &&
-            !inner_file_name.ends_with("htm") {
+            !inner_file_name.ends_with("htm") &&
+            !Path::new(inner_file_path.as_str()).exists() {
 
             println!("Extracting: {}", file.name());
 
@@ -72,6 +73,8 @@ fn process_zip<T: Read + Seek>(zip_file: T) {
 
             let mut inner_file = File::create(inner_file_path.clone()).unwrap();
             inner_file.write_all(zip_buf.as_slice()).unwrap();
+        } else {
+            println!("Skipping: {}", inner_file_name);
         }
 
         if inner_file_name.ends_with("zip") &&
@@ -96,13 +99,13 @@ pub fn retrieve() {
     if let Err(e) = create_dir(BASE) {
         println!("Create dir: {}", e);
     }
-    if let Err(e) = create_dir(VOL_ZIP_DIR) {
+    if let Err(e) = create_dir(format!("{}/{}", BASE, VOL_ZIP_DIR)) {
         println!("Create dir: {}", e);
     }
-    if let Err(e) = create_dir(XML_DIR) {
+    if let Err(e) = create_dir(format!("{}/{}", BASE, XML_DIR)) {
         println!("Create dir: {}", e);
     }
-    if let Err(e) = create_dir(INNER_ZIP_DIR) {
+    if let Err(e) = create_dir(format!("{}/{}", BASE, INNER_ZIP_DIR)) {
         println!("Create dir: {}", e);
     }
 
