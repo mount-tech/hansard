@@ -18,8 +18,8 @@ use std::env;
 
 fn usage() {
     println!("usage: hansard [-h | --help] <command>");
-    println!("  all Grabs the last 20 Hansard bound volumes");
-    println!("  xml Prints the hansard bound volume xml");
+    println!("  all     Grabs the last 20 Hansard bound volumes");
+    println!("  xml     Prints the hansard bound volume xml");
     println!("  help    Displays this message");
 }
 
