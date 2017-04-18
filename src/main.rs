@@ -1,7 +1,11 @@
 /*!
     Binary to get the last 20 Hansard Bound Volumes of the UK Parliament
 
-    Usage: `hansard all` Gets the last 20 bound volumes and saves to ./data/ directory
+    Usage: 
+    
+    `hansard all` Gets the last 20 bound volumes and saves to ./data/ directory
+    
+    `hansard xml` Prints the xml from the last 20 bound volumes e.g `hansard xml | grep election`
 */
 
 #![deny(missing_docs)]
