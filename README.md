@@ -23,3 +23,5 @@ Usage as library:
         retrieve::retrieve();
     }
 ```
+
+[License](https://github.com/mount-research/hansard/blob/master/LICENSE.md)
