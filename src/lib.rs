@@ -3,7 +3,7 @@
 
     Usage:
 
-    ```
+    ```no_run
         extern crate hansard;
 
         use hansard::retrieve;
