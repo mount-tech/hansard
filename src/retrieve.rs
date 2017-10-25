@@ -123,12 +123,12 @@ pub fn retrieve() {
         info!("Create dir: {}", e);
     }
 
-    let vol_urls = feed.entries.iter()
-        .map(|e| e.links.first().unwrap().href.clone())
-        .collect::<Vec<String>>();
+    let vol_urls = feed.entries().iter()
+        .map(|e| e.links().first().unwrap().href().clone())
+        .collect::<Vec<&str>>();
 
     let handles = vol_urls.iter()
-        .map(|url| get_save_zip(url.clone()))
+        .map(|url| get_save_zip(url.clone().into()))
         .collect::<Vec<thread::JoinHandle<()>>>();
 
     for h in handles {
