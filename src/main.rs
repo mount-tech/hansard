@@ -1,10 +1,10 @@
 /*!
     Binary to get the last 20 Hansard Bound Volumes of the UK Parliament
 
-    Usage: 
-    
+    Usage:
+
     `hansard all` Gets the last 20 bound volumes and saves to ./data/ directory
-    
+
     `hansard xml` Prints the xml from the last 20 bound volumes e.g `hansard xml | grep election`
 */
 
@@ -15,6 +15,8 @@ extern crate hyper;
 extern crate zip;
 #[macro_use]
 extern crate log;
+extern crate tokio_core;
+extern crate futures;
 
 mod retrieve;
 

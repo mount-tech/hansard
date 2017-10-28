@@ -23,6 +23,8 @@ extern crate hyper;
 extern crate zip;
 #[macro_use]
 extern crate log;
+extern crate tokio_core;
+extern crate futures;
 
 /// Module for retrieving the Hansard bound volumes
 pub mod retrieve;
