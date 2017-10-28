@@ -36,7 +36,7 @@ name = "backtrace-sys"
 version = "0.1.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "cc 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "cc 1.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.32 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -68,13 +68,13 @@ name = "bzip2-sys"
 version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "cc 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "cc 1.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.32 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "cc"
-version = "1.0.2"
+version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
@@ -210,7 +210,7 @@ name = "miniz-sys"
 version = "0.1.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
- "cc 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "cc 1.0.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.32 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -381,7 +381,7 @@ dependencies = [
 "checksum byteorder 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "ff81738b726f5d099632ceaffe7fb65b90212e8dce59d518729e7e8634032d3d"
 "checksum bzip2 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)" = "c3eafc42c44e0d827de6b1c131175098fe7fb53b8ce8a47e65cb3ea94688be24"
 "checksum bzip2-sys 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)" = "2c5162604199bbb17690ede847eaa6120a3f33d5ab4dcc8e7c25b16d849ae79b"
-"checksum cc 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "ef4019bdb99c0c1ddd56c12c2f507c174d729c6915eca6bd9d27c42f3d93b0f4"
+"checksum cc 1.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "a9b13a57efd6b30ecd6598ebdb302cca617930b5470647570468a65d12ef9719"
 "checksum cfg-if 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "d4c819a1287eb618df47cc647173c5c4c66ba19d888a6e50d605672aed3140de"
 "checksum dbghelp-sys 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "97590ba53bcb8ac28279161ca943a924d1fd4a8fb3fa63302591647c4fc5b850"
 "checksum derive_builder 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)" = "03600ae366b6eb2314e54d62adc833d9866da03798acc61c61789654ceaa227a"
