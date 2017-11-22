@@ -32,7 +32,13 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
         if Path::new(full_path.as_str()).exists() {
             info!("Skipping: {}", full_path);
 
-            let zip_file = File::open(full_path).unwrap();
+            let zip_file = match File::open(full_path) {
+                Ok(f) => f,
+                Err(e) => {
+                    error!("get_save_zip|File::open|{:?}", e);
+                    return;
+                }
+            };
             process_zip(zip_file);
         } else {
             info!("Getting: {}", url);
@@ -98,8 +104,16 @@ fn process_zip<T: Read + Seek>(zip_file: T) {
 
         if inner_file_name.ends_with("zip") &&
             !inner_file_name.contains("html") {
-            let inner_zip = File::open(inner_file_path).unwrap();
-            process_zip(inner_zip);
+            loop {
+                // process the inner file
+                match File::open(inner_file_path.clone()) {
+                    Ok(f) => {
+                        process_zip(f);
+                        continue;
+                    },
+                    Err(e) => error!("{:?}", e),
+                };
+            }
         }
     }
 }
