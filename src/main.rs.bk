@@ -35,11 +35,11 @@ fn main() {
     match arg.as_str() {
         "all" => retrieve::retrieve(),
         "xml" => {
-            let vol_xml = retrieve::xml();
+            let vol_xml  = retrieve::xml();
             for v in vol_xml {
                 println!("{}", v);
             }
-        }
+        },
         "help" | "-h" | "--help" | _ => usage(),
     }
 }
