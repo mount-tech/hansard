@@ -5,7 +5,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "atom_syndication"
-version = "0.5.6"
+version = "0.5.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "derive_builder 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -178,7 +178,7 @@ dependencies = [
 name = "hansard"
 version = "0.1.3"
 dependencies = [
- "atom_syndication 0.5.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "atom_syndication 0.5.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures 0.1.18 (registry+https://github.com/rust-lang/crates.io-index)",
  "hyper 0.11.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -588,7 +588,7 @@ dependencies = [
 
 [metadata]
 "checksum adler32 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "6cbd0b9af8587c72beadc9f72d35b9fbb070982c9e6203e46e93f10df25f8f45"
-"checksum atom_syndication 0.5.6 (registry+https://github.com/rust-lang/crates.io-index)" = "161b8cfcf80903e65428fb4da24b96a66f94f8556f0ae9dda3ffd91d0a2db626"
+"checksum atom_syndication 0.5.7 (registry+https://github.com/rust-lang/crates.io-index)" = "11529394b399a27ed1f25bf09172b0309dfccbf694154b3a6d1bb0e0ae591b41"
 "checksum backtrace 0.3.5 (registry+https://github.com/rust-lang/crates.io-index)" = "ebbbf59b1c43eefa8c3ede390fcc36820b4999f7914104015be25025e0d62af2"
 "checksum backtrace-sys 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)" = "44585761d6161b0f57afc49482ab6bd067e4edef48c12a152c237eb0203f7661"
 "checksum base64 0.9.0 (registry+https://github.com/rust-lang/crates.io-index)" = "229d032f1a99302697f10b27167ae6d03d49d032e6a8e2550e8d3fc13356d2b4"
