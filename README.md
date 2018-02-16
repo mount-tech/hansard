@@ -3,7 +3,7 @@ Hansard
 ========
 
 [![crates.io version](https://img.shields.io/crates/v/hansard.svg)](https://crates.io/crates/hansard)
-[![Build status](https://travis-ci.org/mount-research/hansard.svg?branch=master)](https://travis-ci.org/mount-research/hansard)
+[![Build status](https://travis-ci.org/mount-tech/hansard.svg?branch=master)](https://travis-ci.org/mount-tech/hansard)
 [![Documentation](https://docs.rs/hansard/badge.svg)](https://docs.rs/hansard)
 
 At the moment just grabs the last 20 [Hansard Bound Volumes](http://api.data.parliament.uk/resources/files/feed?dataset=14) zipfiles.
@@ -26,4 +26,4 @@ Usage as library:
     }
 ```
 
-[License](https://github.com/mount-research/hansard/blob/master/LICENSE.md)
+[License](https://github.com/mount-tech/hansard/blob/master/LICENSE.md)
