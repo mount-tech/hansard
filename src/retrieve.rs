@@ -54,7 +54,7 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
                     let mut zip_buf = Vec::new();
                     let z = z.iter()
                         .flat_map(|c| c as &[u8])
-                        .map(|u| *u)
+                        .cloned()
                         .collect::<Vec<u8>>();
                     let _ = z.as_slice().read_to_end(&mut zip_buf);
                     info!("Saving: {}", file_name);
@@ -151,7 +151,7 @@ pub fn retrieve() {
             let mut atom_str = String::new();
             let feed = feed.iter()
                 .flat_map(|c| c as &[u8])
-                .map(|u| *u)
+                .cloned()
                 .collect::<Vec<u8>>();
             feed.as_slice().read_to_string(&mut atom_str).unwrap();
 
