@@ -17,11 +17,11 @@ use tokio_core;
 use futures::Future;
 use futures::stream::Stream;
 
-const BOUND_VOL_URL: &'static str = "http://api.data.parliament.uk/resources/files/feed?dataset=14";
-const BASE: &'static str = "./data";
-const VOL_ZIP_DIR: &'static str = "vol_zip";
-const XML_DIR: &'static str = "xml";
-const INNER_ZIP_DIR: &'static str = "inner_zip";
+const BOUND_VOL_URL: &str = "http://api.data.parliament.uk/resources/files/feed?dataset=14";
+const BASE: &str = "./data";
+const VOL_ZIP_DIR: &str = "vol_zip";
+const XML_DIR: &str = "xml";
+const INNER_ZIP_DIR: &str = "inner_zip";
 
 fn get_save_zip(url: String) -> thread::JoinHandle<()> {
     thread::spawn(move || {
