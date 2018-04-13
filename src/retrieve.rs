@@ -77,7 +77,7 @@ fn process_zip<T: Read + Seek>(zip_file: T) {
     for i in 0..zip.len() {
         let mut file = zip.by_index(i).unwrap();
         let og_file_name = format!("{}", file.name());
-        let inner_split_path = og_file_name.split("/").collect::<Vec<&str>>();
+        let inner_split_path = og_file_name.split('/').collect::<Vec<&str>>();
         let inner_file_name = inner_split_path.last().unwrap();
         let folder = if inner_file_name.ends_with("xml") {
             XML_DIR
