@@ -30,7 +30,7 @@ fn usage() {
 }
 
 fn main() {
-    let arg = env::args().nth(1).unwrap_or("".to_string());
+    let arg = env::args().nth(1).unwrap_or_else(|| "".to_string());
 
     match arg.as_str() {
         "all" => retrieve::retrieve(),
