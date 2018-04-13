@@ -172,12 +172,12 @@ pub fn retrieve() {
 
             let vol_urls = feed.entries()
                 .iter()
-                .map(|e| e.links().first().unwrap().href().clone())
+                .map(|e| e.links().first().unwrap().href())
                 .collect::<Vec<&str>>();
 
             let handles = vol_urls
                 .iter()
-                .map(|url| get_save_zip(url.clone().into()))
+                .map(|url| get_save_zip((*url).into()))
                 .collect::<Vec<thread::JoinHandle<()>>>();
 
             for h in handles {
