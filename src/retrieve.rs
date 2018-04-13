@@ -25,7 +25,7 @@ const INNER_ZIP_DIR: &str = "inner_zip";
 
 fn get_save_zip(url: String) -> thread::JoinHandle<()> {
     thread::spawn(move || {
-        let split_path = url.split("/").collect::<Vec<&str>>();
+        let split_path = url.split('/').collect::<Vec<&str>>();
         let file_name = split_path.last().unwrap();
         let full_path = format!("{}/{}/{}", BASE, VOL_ZIP_DIR, file_name);
 
