@@ -1,9 +1,9 @@
-use std::io::Read;
-use std::thread;
 use std::fs;
-use std::fs::{File, create_dir};
+use std::fs::{create_dir, File};
 use std::io::prelude::*;
+use std::io::Read;
 use std::path::Path;
+use std::thread;
 
 use atom_syndication::Feed;
 
@@ -14,8 +14,8 @@ use zip::ZipArchive;
 
 use tokio_core;
 
-use futures::Future;
 use futures::stream::Stream;
+use futures::Future;
 
 const BOUND_VOL_URL: &str = "http://api.data.parliament.uk/resources/files/feed?dataset=14";
 const BASE: &str = "./data";
@@ -49,8 +49,10 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
 
             let url = url.parse::<hyper::Uri>().unwrap();
 
-            let work = client.get(url).and_then(|res| res.body().collect()).map(
-                |z| {
+            let work = client
+                .get(url)
+                .and_then(|res| res.body().collect())
+                .map(|z| {
                     let mut zip_buf = Vec::new();
                     let z = z.iter()
                         .flat_map(|c| c as &[u8])
@@ -63,8 +65,7 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
                     file.write_all(zip_buf.as_slice()).unwrap();
 
                     process_zip(file);
-                },
-            );
+                });
 
             core.run(work).unwrap();
         }
@@ -86,11 +87,10 @@ fn process_zip<T: Read + Seek>(zip_file: T) {
         };
         let inner_file_path = format!("{}/{}/{}", BASE, folder, inner_file_name);
 
-        if !inner_file_name.contains("html") && !inner_file_name.ends_with("pdf") &&
-            !inner_file_name.ends_with("htm") &&
-            !Path::new(inner_file_path.as_str()).exists()
+        if !inner_file_name.contains("html") && !inner_file_name.ends_with("pdf")
+            && !inner_file_name.ends_with("htm")
+            && !Path::new(inner_file_path.as_str()).exists()
         {
-
             info!("Extracting: {}", file.name());
 
             let mut zip_buf = Vec::new();
@@ -146,8 +146,10 @@ pub fn retrieve() {
 
     let url = BOUND_VOL_URL.parse::<hyper::Uri>().unwrap();
 
-    let work = client.get(url).and_then(|res| res.body().collect()).map(
-        |feed| {
+    let work = client
+        .get(url)
+        .and_then(|res| res.body().collect())
+        .map(|feed| {
             let mut atom_str = String::new();
             let feed = feed.iter()
                 .flat_map(|c| c as &[u8])
@@ -185,8 +187,7 @@ pub fn retrieve() {
                     info!("Error: {:?}", e);
                 }
             }
-        },
-    );
+        });
 
     core.run(work).unwrap();
 }

@@ -15,8 +15,8 @@ extern crate hyper;
 extern crate zip;
 #[macro_use]
 extern crate log;
-extern crate tokio_core;
 extern crate futures;
+extern crate tokio_core;
 
 mod retrieve;
 
