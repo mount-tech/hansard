@@ -44,14 +44,13 @@ fn get_save_zip(url: String) -> thread::JoinHandle<()> {
             info!("Getting: {}", url);
 
             let mut core = tokio_core::reactor::Core::new().unwrap();
-            let handle = core.handle();
-            let client = Client::new(&handle);
+            let client = Client::new();
 
             let url = url.parse::<hyper::Uri>().unwrap();
 
             let work = client
                 .get(url)
-                .and_then(|res| res.body().collect())
+                .and_then(|res| res.into_body().collect())
                 .map(|z| {
                     let mut zip_buf = Vec::new();
                     let z = z.iter()
@@ -141,14 +140,13 @@ pub fn xml() -> Vec<String> {
 /// Retrieves the bound volumes
 pub fn retrieve() {
     let mut core = tokio_core::reactor::Core::new().unwrap();
-    let handle = core.handle();
-    let client = Client::new(&handle);
+    let client = Client::new();
 
     let url = BOUND_VOL_URL.parse::<hyper::Uri>().unwrap();
 
     let work = client
         .get(url)
-        .and_then(|res| res.body().collect())
+        .and_then(|res| res.into_body().collect())
         .map(|feed| {
             let mut atom_str = String::new();
             let feed = feed.iter()
