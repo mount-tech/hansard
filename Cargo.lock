@@ -18,7 +18,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "derive_builder 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "failure 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "quick-xml 0.12.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "quick-xml 0.12.3 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -506,7 +506,7 @@ dependencies = [
 
 [[package]]
 name = "quick-xml"
-version = "0.12.2"
+version = "0.12.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "encoding_rs 0.8.6 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -980,7 +980,7 @@ dependencies = [
 "checksum parking_lot_core 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "06a2b6aae052309c2fd2161ef58f5067bc17bb758377a0de9d4b279d603fdd8a"
 "checksum podio 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)" = "780fb4b6698bbf9cf2444ea5d22411cef2953f0824b98f33cf454ec5615645bd"
 "checksum proc-macro2 0.4.15 (registry+https://github.com/rust-lang/crates.io-index)" = "295af93acfb1d5be29c16ca5b3f82d863836efd9cb0c14fd83811eb9a110e452"
-"checksum quick-xml 0.12.2 (registry+https://github.com/rust-lang/crates.io-index)" = "1c744b23f68c9c968001d386622afb1f4f5d53b3bccd43a10caca768efceda58"
+"checksum quick-xml 0.12.3 (registry+https://github.com/rust-lang/crates.io-index)" = "7fabc3b4b39f1ac835f364a1f21cbe1d4059770d4e07a9590e9aaf229596907e"
 "checksum quote 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)" = "7a6e920b65c65f10b2ae65c831a81a073a89edd28c7cce89475bff467ab4167a"
 "checksum quote 0.6.8 (registry+https://github.com/rust-lang/crates.io-index)" = "dd636425967c33af890042c483632d33fa7a18f19ad1d7ea72e8998c6ef8dea5"
 "checksum rand 0.5.5 (registry+https://github.com/rust-lang/crates.io-index)" = "e464cd887e869cddcae8792a4ee31d23c7edd516700695608f5b98c67ee0131c"
